@@ -1,6 +1,6 @@
-// プロジェクトのplan配下のファイルを常に参照する義務的なルール
-// このルールは必ず守ること
-// 指示を受けた際には、plan配下の内容を必ず最初に確認する
+// プロジェクトの義務的ルール - 必ず遵守すること
+// 1. 指示を受けた際には、まずplan配下の内容を確認する
+// 2. パッケージ関連コマンドは常にbunを優先使用する
 
 {
   "obligatory_rules": [
@@ -11,6 +11,26 @@
         {
           "type": "read_directory",
           "path": "plan"
+        }
+      ]
+    },
+    {
+      "description": "パッケージ管理およびスクリプト実行にはbunを使用すること",
+      "condition": "true",
+      "actions": [
+        {
+          "type": "replace_commands",
+          "replacements": [
+            {
+              "from": "npm",
+              "to": "bun"
+            },
+            {
+              "from": "npx",
+              "to": "bunx"
+            }
+          ],
+          "message": "パッケージ管理やスクリプト実行には常にbunを使用してください"
         }
       ]
     }
