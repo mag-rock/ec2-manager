@@ -1,0 +1,18 @@
+// プロジェクトのplan配下のファイルを常に参照する義務的なルール
+// このルールは必ず守ること
+// 指示を受けた際には、plan配下の内容を必ず最初に確認する
+
+{
+  "obligatory_rules": [
+    {
+      "description": "プロジェクトのplan配下のファイルを常に参照すること",
+      "condition": "true",
+      "actions": [
+        {
+          "type": "read_directory",
+          "path": "plan"
+        }
+      ]
+    }
+  ]
+} 
