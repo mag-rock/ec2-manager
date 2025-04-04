@@ -3,7 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev & bun src/server/index.ts",
+    "dev:next": "next dev",
+    "dev:server": "bun src/server/index.ts",
+    "dev": "npm run dev:next & bun --hot run dev:server",
     "build": "next build",
     "start": "NODE_ENV=production bun src/server/index.ts",
     "lint": "next lint"
