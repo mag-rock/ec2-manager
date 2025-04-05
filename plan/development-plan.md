@@ -30,7 +30,7 @@ EC2インスタンスを効率的に管理できるウェブアプリケーシ�
 
 ## 開発フェーズ
 - [x] 1. プロジェクト構成設定
-  - [x] Next.js + Express統合環境構築
+  - [x] Next.js + Route Handler環境構築
   - [x] 開発環境整備
 - [x] 2. Dockerコンテナ設定
   - [x] Dockerfile作成
