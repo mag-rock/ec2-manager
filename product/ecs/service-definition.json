@@ -1,0 +1,25 @@
+{
+	"cluster": "${ECS_CLUSTER}",
+	"serviceName": "ec2-manager",
+	"taskDefinition": "${TASK_DEFINITION_ARN}",
+	"launchType": "FARGATE",
+	"desiredCount": 1,
+	"deploymentConfiguration": {
+		"maximumPercent": 200,
+		"minimumHealthyPercent": 100
+	},
+	"networkConfiguration": {
+		"awsvpcConfiguration": {
+			"subnets": [ "${SUBNET_ID_1}", "${SUBNET_ID_2}" ],
+			"securityGroups": [ "${SECURITY_GROUP_ID}" ],
+			"assignPublicIp": "ENABLED"
+		}
+	},
+	"loadBalancers": [
+		{
+			"targetGroupArn": "${TARGET_GROUP_ARN}",
+			"containerName": "ec2-manager",
+			"containerPort": 3000
+		}
+	]
+}

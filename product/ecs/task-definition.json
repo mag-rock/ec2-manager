@@ -1,0 +1,42 @@
+{
+	"family": "ec2-manager",
+	"networkMode": "awsvpc",
+	"executionRoleArn": "arn:aws:iam::${AWS_ACCOUNT_ID}:role/ecsTaskExecutionRole",
+	"taskRoleArn": "arn:aws:iam::${AWS_ACCOUNT_ID}:role/ec2-manager-task-role",
+	"containerDefinitions": [
+		{
+			"name": "ec2-manager",
+			"image": "${ECR_REPOSITORY_URI}:latest",
+			"essential": true,
+			"portMappings": [
+				{
+					"containerPort": 3000,
+					"hostPort": 3000,
+					"protocol": "tcp"
+				}
+			],
+			"logConfiguration": {
+				"logDriver": "awslogs",
+				"options": {
+					"awslogs-group": "/ecs/ec2-manager",
+					"awslogs-region": "${AWS_REGION}",
+					"awslogs-stream-prefix": "ecs"
+				}
+			},
+			"environment": [
+				{
+					"name": "NODE_ENV",
+					"value": "production"
+				}
+			],
+			"cpu": 256,
+			"memory": 512,
+			"memoryReservation": 256
+		}
+	],
+	"requiresCompatibilities": [
+		"FARGATE"
+	],
+	"cpu": "256",
+	"memory": "512"
+}
