@@ -53,12 +53,13 @@ aws elbv2 create-listener --load-balancer-arn loadbalancer-arn --protocol HTTP -
    - `AWS_ROLE_TO_ASSUME`: GitHub Actionsが引き受けるIAMロールのARN
 
 ## 手動デプロイ手順
-1. タスク定義の登録
+1. タスク定義、サービス定義のプレースホルダーを適宜書き換え
+2. タスク定義の登録
 ```bash
 aws ecs register-task-definition --cli-input-json file://task-definition.json
 ```
 
-2. サービスの作成/更新
+3. サービスの作成/更新
 ```bash
 # 新規作成
 aws ecs create-service --cli-input-json file://service-definition.json

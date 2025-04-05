@@ -14,12 +14,5 @@
 			"securityGroups": [ "${SECURITY_GROUP_ID}" ],
 			"assignPublicIp": "ENABLED"
 		}
-	},
-	"loadBalancers": [
-		{
-			"targetGroupArn": "${TARGET_GROUP_ARN}",
-			"containerName": "ec2-manager",
-			"containerPort": 3000
-		}
-	]
+	}
 }
