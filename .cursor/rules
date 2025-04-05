@@ -34,5 +34,27 @@
         }
       ]
     }
+  ],
+  "checklist_rules": [
+    {
+      "description": "依頼されたタスクが完了したと依頼者が判断したときにチェックリストを更新する",
+      "condition": "user_confirms_completion",
+      "actions": [
+        {
+          "type": "update_checklist",
+          "file": "plan/development-plan.md"
+        }
+      ]
+    },
+    {
+      "description": "具体的に明確化されたDONE条件を厳密に満たしているとあなたが判断したときにチェックリストを更新する",
+      "condition": "done_conditions_met",
+      "actions": [
+        {
+          "type": "update_checklist",
+          "file": "plan/development-plan.md"
+        }
+      ]
+    }
   ]
 } 
