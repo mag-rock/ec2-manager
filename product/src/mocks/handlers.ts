@@ -39,7 +39,7 @@ const mockInstances = [
 ]
 
 // インスタンス操作の状態を管理するオブジェクト
-let instanceStates = mockInstances.reduce((acc, instance) => {
+const instanceStates = mockInstances.reduce((acc, instance) => {
 	acc[instance.id] = instance.state
 	return acc
 }, {} as Record<string, string>)

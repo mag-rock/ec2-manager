@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
 
@@ -36,7 +36,7 @@ export default function InstanceDetailsPage() {
 	const [error, setError] = useState('');
 
 	// インスタンス詳細情報を取得する関数
-	const fetchInstanceDetails = async () => {
+	const fetchInstanceDetails = useCallback(async () => {
 		try {
 			setLoading(true);
 			const response = await fetch(`/api/ec2/instances/${instanceId}`);
@@ -52,7 +52,7 @@ export default function InstanceDetailsPage() {
 		} finally {
 			setLoading(false);
 		}
-	};
+	}, [instanceId]);
 
 	// インスタンスを制御する関数
 	const controlInstance = async (action: string) => {
@@ -78,9 +78,9 @@ export default function InstanceDetailsPage() {
 			setTimeout(() => {
 				fetchInstanceDetails();
 			}, 2000);
-		} catch (err: any) {
+		} catch (err) {
 			console.error('インスタンス操作エラー:', err);
-			setError(err.message || 'インスタンス操作中にエラーが発生しました');
+			setError(err instanceof Error ? err.message : 'インスタンス操作中にエラーが発生しました');
 			setLoading(false);
 		}
 	};
@@ -88,7 +88,7 @@ export default function InstanceDetailsPage() {
 	// 初回レンダリング時にインスタンス詳細を取得
 	useEffect(() => {
 		fetchInstanceDetails();
-	}, [instanceId]);
+	}, [instanceId, fetchInstanceDetails]);
 
 	// インスタンスの状態に応じた色を返す
 	const getStateColor = (state: string) => {

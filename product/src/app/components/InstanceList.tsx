@@ -80,9 +80,9 @@ export default function InstanceList({ instances, onRefresh }: InstanceListProps
 				onRefresh();
 			}, 2000);
 
-		} catch (err: any) {
+		} catch (err) {
 			console.error('インスタンス操作エラー:', err);
-			setActionError(err.message || 'インスタンス操作中にエラーが発生しました');
+			setActionError(err instanceof Error ? err.message : 'インスタンス操作中にエラーが発生しました');
 		} finally {
 			setIsLoading(false);
 		}

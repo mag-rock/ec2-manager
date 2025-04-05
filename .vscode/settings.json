@@ -1,0 +1,16 @@
+{
+	"files.exclude": {
+		"**/node_modules": true
+	},
+	"typescript.validate.enable": true,
+	"typescript.validate.enableProjectDiagnostics": true,
+	"typescript.tsserver.watchOptions": {
+		"excludeDirectories": [ "**/node_modules" ]
+	},
+	"eslint.validate": [ "javascript", "javascriptreact", "typescript", "typescriptreact" ],
+	"eslint.workingDirectories": [ { "mode": "auto" } ],
+	"search.exclude": {
+		"**/node_modules": true
+	},
+	"typescript.tsdk": "node_modules/typescript/lib"
+}
