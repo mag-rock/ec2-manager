@@ -46,7 +46,7 @@ const instanceStates = mockInstances.reduce((acc, instance) => {
 
 export const handlers = [
 	// インスタンス一覧取得API
-	http.get('/api/ec2/instances', async () => {
+	http.get('/api/instances', async () => {
 		// レスポンスに500msの遅延を追加して実際のAPIっぽくする
 		await delay(500)
 
@@ -60,7 +60,7 @@ export const handlers = [
 	}),
 
 	// インスタンス詳細取得API
-	http.get('/api/ec2/instances/:id', async ({ params }) => {
+	http.get('/api/instances/:id', async ({ params }) => {
 		const { id } = params
 		await delay(500)
 
@@ -104,7 +104,7 @@ export const handlers = [
 	}),
 
 	// インスタンス操作API
-	http.post('/api/ec2/control', async ({ request }) => {
+	http.post('/api/control', async ({ request }) => {
 		await delay(800)
 
 		// リクエストボディをJSON形式で取得

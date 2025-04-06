@@ -55,7 +55,7 @@ export default function InstanceList({ instances, onRefresh }: InstanceListProps
 			setActionMessage('');
 			setActionError('');
 
-			const response = await fetch('/api/ec2/control', {
+			const response = await fetch('/api/control', {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',
@@ -201,7 +201,7 @@ export default function InstanceList({ instances, onRefresh }: InstanceListProps
 									<td className="px-4 py-2 whitespace-nowrap font-mono text-sm text-gray-900">{instance.privateIp || '-'}</td>
 									<td className="px-4 py-2 whitespace-nowrap text-sm font-medium">
 										<Link
-											href={`/ec2/instances/${instance.id}`}
+											href={`/instances/${instance.id}`}
 											className="text-blue-500 hover:text-blue-700 underline"
 										>
 											詳細
