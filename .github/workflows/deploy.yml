@@ -54,6 +54,24 @@ jobs:
           container-name: ec2-manager
           image: ${{ steps.build-image.outputs.image }}
 
+      - name: Substitute placeholders in task definition
+        id: substitute-placeholders
+        run: |
+          AWS_ACCOUNT_ID=$(aws sts get-caller-identity --query Account --output text)
+          ECR_REPOSITORY_URI="${{ steps.login-ecr.outputs.registry }}/${{ env.ECR_REPOSITORY }}"
+          AWS_REGION_VALUE="${{ env.AWS_REGION }}"
+
+          TASK_DEF_FILE=${{ steps.task-def.outputs.task-definition }}
+
+          sed -i "s|\${AWS_ACCOUNT_ID}|$AWS_ACCOUNT_ID|g" $TASK_DEF_FILE
+          echo "Substituted AWS_ACCOUNT_ID in $TASK_DEF_FILE"
+
+          sed -i "s|\${ECR_REPOSITORY_URI}|$ECR_REPOSITORY_URI|g" $TASK_DEF_FILE
+          echo "Substituted ECR_REPOSITORY_URI in $TASK_DEF_FILE"
+
+          sed -i "s|\${AWS_REGION}|$AWS_REGION_VALUE|g" $TASK_DEF_FILE
+          echo "Substituted AWS_REGION in $TASK_DEF_FILE"
+
       - name: Deploy Amazon ECS task definition
         uses: aws-actions/amazon-ecs-deploy-task-definition@v1
         with:
