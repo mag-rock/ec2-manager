@@ -90,18 +90,18 @@ export default function InstanceDetailsPage() {
 		fetchInstanceDetails();
 	}, [instanceId, fetchInstanceDetails]);
 
-	// インスタンスの状態に応じた色を返す
-	const getStateColor = (state: string) => {
+	// インスタンスの状態に応じたスタイルクラスを返す
+	const getStateClasses = (state: string) => {
 		switch (state) {
 			case 'running':
-				return 'text-green-600';
+				return 'bg-green-100 text-green-800 px-2 py-0.5 rounded-full text-xs font-medium';
 			case 'stopped':
-				return 'text-red-600';
+				return 'bg-red-100 text-red-800 px-2 py-0.5 rounded-full text-xs font-medium';
 			case 'pending':
 			case 'stopping':
-				return 'text-yellow-600';
+				return 'bg-yellow-100 text-yellow-800 px-2 py-0.5 rounded-full text-xs font-medium';
 			default:
-				return 'text-gray-600';
+				return 'bg-gray-100 text-gray-800 px-2 py-0.5 rounded-full text-xs font-medium';
 		}
 	};
 
@@ -153,17 +153,18 @@ export default function InstanceDetailsPage() {
 					<div className="animate-spin h-8 w-8 border-4 border-blue-500 rounded-full border-t-transparent"></div>
 				</div>
 			) : instance ? (
-				<div className="bg-white rounded-lg shadow-md overflow-hidden">
-					<div className="p-6 border-b">
-						<div className="flex flex-wrap justify-between mb-4">
+				<div className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
+					<div className="p-6 border-b border-gray-200">
+						<div className="flex flex-wrap justify-between items-start mb-4">
 							<div>
-								<h2 className="text-xl font-semibold mb-1">
-									{instance.tags?.Name || 'No Name'} ({instance.id})
+								<h2 className="text-xl font-semibold mb-1 flex items-center">
+									{instance.tags?.Name || 'No Name'}
+									<span className="text-gray-500 font-mono text-sm ml-2">({instance.id})</span>
 								</h2>
-								<p className="text-gray-600">{instance.type}</p>
+								<p className="text-sm text-gray-600">{instance.type}</p>
 							</div>
-							<div className="flex items-center gap-2 mt-2 sm:mt-0">
-								<span className={`font-semibold ${getStateColor(instance.state)}`}>
+							<div className="flex items-center gap-2 mt-2 sm:mt-0 flex-shrink-0">
+								<span className={getStateClasses(instance.state)}>
 									{getStateLabel(instance.state)}
 								</span>
 								{instance.state === 'stopped' && (
@@ -192,140 +193,168 @@ export default function InstanceDetailsPage() {
 
 						<div className="grid grid-cols-1 md:grid-cols-2 gap-6">
 							<div>
-								<h3 className="text-lg font-semibold mb-2">基本情報</h3>
-								<table className="w-full border-collapse">
-									<tbody>
-										<tr className="border-b">
-											<td className="py-2 pr-4 font-medium text-gray-700 w-1/3">インスタンスID</td>
-											<td className="py-2 font-mono">{instance.id}</td>
-										</tr>
-										<tr className="border-b">
-											<td className="py-2 pr-4 font-medium text-gray-700">インスタンスタイプ</td>
-											<td className="py-2">{instance.type}</td>
-										</tr>
-										<tr className="border-b">
-											<td className="py-2 pr-4 font-medium text-gray-700">状態</td>
-											<td className={`py-2 font-semibold ${getStateColor(instance.state)}`}>
-												{getStateLabel(instance.state)}
-											</td>
-										</tr>
-										<tr className="border-b">
-											<td className="py-2 pr-4 font-medium text-gray-700">パブリックIP</td>
-											<td className="py-2 font-mono">{instance.publicIp || '-'}</td>
-										</tr>
-										<tr className="border-b">
-											<td className="py-2 pr-4 font-medium text-gray-700">プライベートIP</td>
-											<td className="py-2 font-mono">{instance.privateIp || '-'}</td>
-										</tr>
-										<tr className="border-b">
-											<td className="py-2 pr-4 font-medium text-gray-700">起動時間</td>
-											<td className="py-2">
-												{instance.launchTime ? new Date(instance.launchTime).toLocaleString('ja-JP') : '-'}
-											</td>
-										</tr>
-										<tr className="border-b">
-											<td className="py-2 pr-4 font-medium text-gray-700">ゾーン</td>
-											<td className="py-2">{instance.availabilityZone || '-'}</td>
-										</tr>
-									</tbody>
-								</table>
+								<h3 className="text-lg font-semibold mb-3 text-gray-800">基本情報</h3>
+								<div className="overflow-hidden border border-gray-200 rounded-md">
+									<table className="w-full text-sm">
+										<tbody className="divide-y divide-gray-200">
+											<tr className="hover:bg-slate-50">
+												<td className="px-4 py-2 font-medium text-gray-600 w-1/3">インスタンスID</td>
+												<td className="px-4 py-2 font-mono text-gray-800">{instance.id}</td>
+											</tr>
+											<tr className="hover:bg-slate-50">
+												<td className="px-4 py-2 font-medium text-gray-600">インスタンスタイプ</td>
+												<td className="px-4 py-2 text-gray-800">{instance.type}</td>
+											</tr>
+											<tr className="hover:bg-slate-50">
+												<td className="px-4 py-2 font-medium text-gray-600">状態</td>
+												<td className="px-4 py-2">
+													<span className={getStateClasses(instance.state)}>
+														{getStateLabel(instance.state)}
+													</span>
+												</td>
+											</tr>
+											<tr className="hover:bg-slate-50">
+												<td className="px-4 py-2 font-medium text-gray-600">パブリックIP</td>
+												<td className="px-4 py-2 font-mono text-gray-800">{instance.publicIp || '-'}</td>
+											</tr>
+											<tr className="hover:bg-slate-50">
+												<td className="px-4 py-2 font-medium text-gray-600">プライベートIP</td>
+												<td className="px-4 py-2 font-mono text-gray-800">{instance.privateIp || '-'}</td>
+											</tr>
+											<tr className="hover:bg-slate-50">
+												<td className="px-4 py-2 font-medium text-gray-600">起動時間</td>
+												<td className="px-4 py-2 text-gray-800">
+													{instance.launchTime ? new Date(instance.launchTime).toLocaleString('ja-JP') : '-'}
+												</td>
+											</tr>
+											<tr className="hover:bg-slate-50">
+												<td className="px-4 py-2 font-medium text-gray-600">ゾーン</td>
+												<td className="px-4 py-2 text-gray-800">{instance.availabilityZone || '-'}</td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
 							</div>
 
 							<div>
-								<h3 className="text-lg font-semibold mb-2">ネットワーク・ストレージ</h3>
-								<table className="w-full border-collapse">
-									<tbody>
-										<tr className="border-b">
-											<td className="py-2 pr-4 font-medium text-gray-700 w-1/3">VPC ID</td>
-											<td className="py-2 font-mono">{instance.vpcId || '-'}</td>
-										</tr>
-										<tr className="border-b">
-											<td className="py-2 pr-4 font-medium text-gray-700">サブネット ID</td>
-											<td className="py-2 font-mono">{instance.subnetId || '-'}</td>
-										</tr>
-										<tr className="border-b">
-											<td className="py-2 pr-4 font-medium text-gray-700">AMI ID</td>
-											<td className="py-2 font-mono">{instance.imageId || '-'}</td>
-										</tr>
-										<tr className="border-b">
-											<td className="py-2 pr-4 font-medium text-gray-700">アーキテクチャ</td>
-											<td className="py-2">{instance.architecture || '-'}</td>
-										</tr>
-										<tr className="border-b">
-											<td className="py-2 pr-4 font-medium text-gray-700">ルートデバイス</td>
-											<td className="py-2 font-mono">{instance.rootDeviceName || '-'}</td>
-										</tr>
-										<tr className="border-b">
-											<td className="py-2 pr-4 font-medium text-gray-700">ステータスチェック</td>
-											<td className="py-2">
-												<div>システム: {instance.statusChecks?.systemStatus || '-'}</div>
-												<div>インスタンス: {instance.statusChecks?.instanceStatus || '-'}</div>
-											</td>
-										</tr>
-									</tbody>
-								</table>
+								<h3 className="text-lg font-semibold mb-3 text-gray-800">ネットワーク・ストレージ</h3>
+								<div className="overflow-hidden border border-gray-200 rounded-md">
+									<table className="w-full text-sm">
+										<tbody className="divide-y divide-gray-200">
+											<tr className="hover:bg-slate-50">
+												<td className="px-4 py-2 font-medium text-gray-600 w-1/3">VPC ID</td>
+												<td className="px-4 py-2 font-mono text-gray-800">{instance.vpcId || '-'}</td>
+											</tr>
+											<tr className="hover:bg-slate-50">
+												<td className="px-4 py-2 font-medium text-gray-600">サブネット ID</td>
+												<td className="px-4 py-2 font-mono text-gray-800">{instance.subnetId || '-'}</td>
+											</tr>
+											<tr className="hover:bg-slate-50">
+												<td className="px-4 py-2 font-medium text-gray-600">AMI ID</td>
+												<td className="px-4 py-2 font-mono text-gray-800">{instance.imageId || '-'}</td>
+											</tr>
+											<tr className="hover:bg-slate-50">
+												<td className="px-4 py-2 font-medium text-gray-600">アーキテクチャ</td>
+												<td className="px-4 py-2 text-gray-800">{instance.architecture || '-'}</td>
+											</tr>
+											<tr className="hover:bg-slate-50">
+												<td className="px-4 py-2 font-medium text-gray-600">ルートデバイス</td>
+												<td className="px-4 py-2 font-mono text-gray-800">{instance.rootDeviceName || '-'}</td>
+											</tr>
+											<tr className="hover:bg-slate-50">
+												<td className="px-4 py-2 font-medium text-gray-600">ステータスチェック</td>
+												<td className="px-4 py-2 text-gray-800">
+													<div>システム: {instance.statusChecks?.systemStatus || '-'}</div>
+													<div>インスタンス: {instance.statusChecks?.instanceStatus || '-'}</div>
+												</td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
 							</div>
 						</div>
 
 						{instance.tags && Object.keys(instance.tags).length > 0 && (
 							<div className="mt-6">
-								<h3 className="text-lg font-semibold mb-2">タグ</h3>
-								<div className="bg-gray-50 p-4 rounded">
-									{Object.entries(instance.tags).map(([key, value]) => (
-										<div key={key} className="mb-1 flex">
-											<span className="font-medium mr-2">{key}:</span>
-											<span>{value || '-'}</span>
-										</div>
-									))}
-								</div>
+								<h3 className="text-lg font-semibold mb-3 text-gray-800">タグ</h3>
+								{instance.tags && Object.keys(instance.tags).length > 0 ? (
+									<div className="overflow-hidden border border-gray-200 rounded-md">
+										<table className="w-full text-sm">
+											<tbody className="divide-y divide-gray-200">
+												{Object.entries(instance.tags).map(([key, value]) => (
+													<tr key={key} className="hover:bg-slate-50">
+														<td className="px-4 py-2 font-medium text-gray-600 w-1/3">{key}</td>
+														<td className="px-4 py-2 text-gray-800">{value || '-'}</td>
+													</tr>
+												))}
+											</tbody>
+										</table>
+									</div>
+								) : (
+									<div className="bg-gray-50 p-4 rounded">
+										<p className="text-sm text-gray-600">タグが設定されていません</p>
+									</div>
+								)}
 							</div>
 						)}
 
 						{instance.securityGroups && instance.securityGroups.length > 0 && (
 							<div className="mt-6">
-								<h3 className="text-lg font-semibold mb-2">セキュリティグループ</h3>
-								<div className="overflow-x-auto">
-									<table className="min-w-full border border-gray-200">
-										<thead>
-											<tr className="bg-gray-100">
-												<th className="px-4 py-2 border text-left">ID</th>
-												<th className="px-4 py-2 border text-left">名前</th>
-											</tr>
-										</thead>
-										<tbody>
-											{instance.securityGroups.map((sg) => (
-												<tr key={sg.id} className="hover:bg-gray-50">
-													<td className="px-4 py-2 border font-mono">{sg.id}</td>
-													<td className="px-4 py-2 border">{sg.name}</td>
+								<h3 className="text-lg font-semibold mb-3 text-gray-800">セキュリティグループ</h3>
+								{instance.securityGroups && instance.securityGroups.length > 0 ? (
+									<div className="overflow-hidden border border-gray-200 rounded-md">
+										<table className="w-full text-sm">
+											<thead className="bg-slate-50">
+												<tr>
+													<th className="px-4 py-2 text-left font-medium text-gray-600 w-1/2">グループID</th>
+													<th className="px-4 py-2 text-left font-medium text-gray-600 w-1/2">グループ名</th>
 												</tr>
-											))}
-										</tbody>
-									</table>
-								</div>
+											</thead>
+											<tbody className="divide-y divide-gray-200">
+												{instance.securityGroups.map((sg) => (
+													<tr key={sg.id} className="hover:bg-slate-50">
+														<td className="px-4 py-2 font-mono text-gray-800">{sg.id}</td>
+														<td className="px-4 py-2 text-gray-800">{sg.name}</td>
+													</tr>
+												))}
+											</tbody>
+										</table>
+									</div>
+								) : (
+									<div className="bg-gray-50 p-4 rounded">
+										<p className="text-sm text-gray-600">セキュリティグループが設定されていません</p>
+									</div>
+								)}
 							</div>
 						)}
 
 						{instance.blockDevices && instance.blockDevices.length > 0 && (
 							<div className="mt-6">
-								<h3 className="text-lg font-semibold mb-2">ブロックデバイス</h3>
-								<div className="overflow-x-auto">
-									<table className="min-w-full border border-gray-200">
-										<thead>
-											<tr className="bg-gray-100">
-												<th className="px-4 py-2 border text-left">デバイス名</th>
-												<th className="px-4 py-2 border text-left">ボリュームID</th>
-											</tr>
-										</thead>
-										<tbody>
-											{instance.blockDevices.map((device) => (
-												<tr key={device.deviceName} className="hover:bg-gray-50">
-													<td className="px-4 py-2 border font-mono">{device.deviceName}</td>
-													<td className="px-4 py-2 border font-mono">{device.volumeId}</td>
+								<h3 className="text-lg font-semibold mb-3 text-gray-800">ブロックデバイス</h3>
+								{instance.blockDevices && instance.blockDevices.length > 0 ? (
+									<div className="overflow-hidden border border-gray-200 rounded-md">
+										<table className="w-full text-sm">
+											<thead className="bg-slate-50">
+												<tr>
+													<th className="px-4 py-2 text-left font-medium text-gray-600 w-1/2">デバイス名</th>
+													<th className="px-4 py-2 text-left font-medium text-gray-600 w-1/2">ボリュームID</th>
 												</tr>
-											))}
-										</tbody>
-									</table>
-								</div>
+											</thead>
+											<tbody className="divide-y divide-gray-200">
+												{instance.blockDevices.map((bd) => (
+													<tr key={bd.deviceName} className="hover:bg-slate-50">
+														<td className="px-4 py-2 text-gray-800">{bd.deviceName}</td>
+														<td className="px-4 py-2 font-mono text-gray-800">{bd.volumeId}</td>
+													</tr>
+												))}
+											</tbody>
+										</table>
+									</div>
+								) : (
+									<div className="bg-gray-50 p-4 rounded">
+										<p className="text-sm text-gray-600">ブロックデバイスが設定されていません</p>
+									</div>
+								)}
 							</div>
 						)}
 					</div>

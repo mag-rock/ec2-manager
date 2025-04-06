@@ -88,18 +88,18 @@ export default function InstanceList({ instances, onRefresh }: InstanceListProps
 		}
 	};
 
-	// インスタンスの状態に応じた色を返す
-	const getStateColor = (state: string) => {
+	// インスタンスの状態に応じたスタイルクラスを返す
+	const getStateClasses = (state: string) => {
 		switch (state) {
 			case 'running':
-				return 'text-green-600';
+				return 'bg-green-100 text-green-800 px-2 py-0.5 rounded-full text-xs font-medium';
 			case 'stopped':
-				return 'text-red-600';
+				return 'bg-red-100 text-red-800 px-2 py-0.5 rounded-full text-xs font-medium';
 			case 'pending':
 			case 'stopping':
-				return 'text-yellow-600';
+				return 'bg-yellow-100 text-yellow-800 px-2 py-0.5 rounded-full text-xs font-medium';
 			default:
-				return 'text-gray-600';
+				return 'bg-gray-100 text-gray-800 px-2 py-0.5 rounded-full text-xs font-medium';
 		}
 	};
 
@@ -156,10 +156,10 @@ export default function InstanceList({ instances, onRefresh }: InstanceListProps
 				</div>
 			) : (
 				<div className="overflow-x-auto">
-					<table className="min-w-full bg-white border border-gray-200">
+					<table className="min-w-full bg-white border border-gray-300 rounded-lg shadow-sm">
 						<thead>
-							<tr className="bg-gray-100">
-								<th className="px-4 py-2 border">
+							<tr className="bg-slate-100 border-b border-gray-300">
+								<th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
 									<input
 										type="checkbox"
 										checked={selectedInstances.length === instances.length && instances.length > 0}
@@ -167,19 +167,19 @@ export default function InstanceList({ instances, onRefresh }: InstanceListProps
 										className="h-4 w-4"
 									/>
 								</th>
-								<th className="px-4 py-2 border">ID</th>
-								<th className="px-4 py-2 border">名前</th>
-								<th className="px-4 py-2 border">タイプ</th>
-								<th className="px-4 py-2 border">状態</th>
-								<th className="px-4 py-2 border">パブリックIP</th>
-								<th className="px-4 py-2 border">プライベートIP</th>
-								<th className="px-4 py-2 border">詳細</th>
+								<th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID</th>
+								<th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">名前</th>
+								<th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">タイプ</th>
+								<th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">状態</th>
+								<th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">パブリックIP</th>
+								<th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">プライベートIP</th>
+								<th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">詳細</th>
 							</tr>
 						</thead>
-						<tbody>
+						<tbody className="bg-white divide-y divide-gray-200">
 							{instances.map((instance) => (
-								<tr key={instance.id} className="hover:bg-gray-50">
-									<td className="px-4 py-2 border text-center">
+								<tr key={instance.id} className="hover:bg-slate-50">
+									<td className="px-4 py-2 whitespace-nowrap text-sm text-gray-500">
 										<input
 											type="checkbox"
 											checked={selectedInstances.includes(instance.id)}
@@ -187,17 +187,19 @@ export default function InstanceList({ instances, onRefresh }: InstanceListProps
 											className="h-4 w-4"
 										/>
 									</td>
-									<td className="px-4 py-2 border font-mono text-sm">{instance.id}</td>
-									<td className="px-4 py-2 border">
+									<td className="px-4 py-2 whitespace-nowrap font-mono text-sm text-gray-900">{instance.id}</td>
+									<td className="px-4 py-2 whitespace-nowrap text-sm text-gray-900">
 										{instance.tags?.Name || '-'}
 									</td>
-									<td className="px-4 py-2 border">{instance.type}</td>
-									<td className={`px-4 py-2 border font-semibold ${getStateColor(instance.state)}`}>
-										{getStateLabel(instance.state)}
+									<td className="px-4 py-2 whitespace-nowrap text-sm text-gray-900">{instance.type}</td>
+									<td className="px-4 py-2 whitespace-nowrap">
+										<span className={getStateClasses(instance.state)}>
+											{getStateLabel(instance.state)}
+										</span>
 									</td>
-									<td className="px-4 py-2 border font-mono text-sm">{instance.publicIp || '-'}</td>
-									<td className="px-4 py-2 border font-mono text-sm">{instance.privateIp || '-'}</td>
-									<td className="px-4 py-2 border text-center">
+									<td className="px-4 py-2 whitespace-nowrap font-mono text-sm text-gray-900">{instance.publicIp || '-'}</td>
+									<td className="px-4 py-2 whitespace-nowrap font-mono text-sm text-gray-900">{instance.privateIp || '-'}</td>
+									<td className="px-4 py-2 whitespace-nowrap text-sm font-medium">
 										<Link
 											href={`/ec2/instances/${instance.id}`}
 											className="text-blue-500 hover:text-blue-700 underline"
