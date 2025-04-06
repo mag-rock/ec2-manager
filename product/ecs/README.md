@@ -28,6 +28,12 @@ aws iam create-role --role-name ec2-manager-task-role --assume-role-policy-docum
 aws iam put-role-policy --role-name ec2-manager-task-role --policy-name ec2-manager-permissions --policy-document file://iam-policy.json
 ```
 
+## CloudWatch Logs ロググループ作成
+タスク定義で使用するロググループを作成します。
+```bash
+aws logs create-log-group --log-group-name /ecs/ec2-manager
+```
+
 ## ネットワーク設定
 1. VPCとサブネットが必要
 2. セキュリティグループの作成
