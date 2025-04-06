@@ -6,39 +6,52 @@ EC2インスタンスを効率的に管理するためのウェブアプリケ�
 
 ```
 ec2-manager/
-├── product/               # アプリケーションのメインディレクトリ
-│   ├── src/               # ソースコード
-│   │   ├── app/           # Next.js アプリケーション
-│   │   │   ├── page.tsx   # メインページ
-│   │   │   ├── layout.tsx # レイアウトコンポーネント
-│   │   │   └── globals.css # グローバルスタイル
-│   │   │
-│   │   └── server/        # Expressサーバー
-│   │       └── index.ts   # サーバー設定
-│   │
-│   ├── public/            # 静的ファイル
-│   │
-│   ├── .next/             # Next.jsビルド出力
-│   ├── node_modules/      # 依存パッケージ
-│   │
-│   ├── package.json       # プロジェクト設定・依存関係
-│   ├── next.config.ts     # Next.js設定
-│   ├── tsconfig.json      # TypeScript設定
-│   └── postcss.config.mjs # PostCSS設定
-│
+├── .github/               # GitHub Actions ワークフロー
+├── .vscode/               # VS Code 設定
+├── doc/                   # ドキュメント
 ├── plan/                  # 開発計画文書
-│   └── development-plan.md # 開発計画詳細
-│
-└── doc/                   # ドキュメント
+├── product/               # Next.js アプリケーションルート
+│   ├── .next/             # Next.js ビルド成果物
+│   ├── node_modules/      # npm パッケージ
+│   ├── public/            # 静的ファイル (画像など)
+│   ├── src/               # ソースコード
+│   │   ├── app/           # Next.js App Router
+│   │   │   ├── api/       # API Route Handlers (バックエンドロジック含む)
+│   │   │   ├── components/ # UI コンポーネント
+│   │   │   ├── lib/       # 共通ライブラリ、ヘルパー関数
+│   │   │   ├── globals.css # グローバル CSS
+│   │   │   ├── layout.tsx # ルートレイアウト
+│   │   │   └── page.tsx   # トップページ
+│   │   └── mocks/         # MSW (APIモック) 関連
+│   ├── .env.local         # ローカル環境変数
+│   ├── .gitignore         # Git 無視ファイル設定
+│   ├── Dockerfile         # Docker イメージ定義
+│   ├── next-env.d.ts      # Next.js 型定義
+│   ├── next.config.ts     # Next.js 設定
+│   ├── package.json       # Node.js プロジェクト設定
+│   ├── bun.lockb          # Bun ロックファイル
+│   ├── postcss.config.mjs # PostCSS 設定
+│   ├── README.md          # アプリケーション README
+│   └── tsconfig.json      # TypeScript 設定
+├── .gitignore             # プロジェクトルート Git 無視設定
+└── README.md              # プロジェクトルート README
 ```
 
 ## 技術スタック
 
 - **フロントエンド**: React/Next.js + TypeScript
 - **スタイリング**: TailwindCSS
-- **バックエンド**: Node.js/Express
+- **バックエンド**: App Router
 - **AWS連携**: AWS SDK for JavaScript/TypeScript
 - **コンテナ化**: Docker
+
+## 環境変数
+
+ローカル開発時には `product/.env.local` ファイルを使用します。このファイルでAPIモックの有効/無効などを設定できます。
+
+## Docker
+
+`product/Dockerfile` にてコンテナイメージのビルド設定を行っています。開発環境や本番環境での実行に使用します。
 
 ## 主要機能
 

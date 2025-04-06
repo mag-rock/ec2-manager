@@ -1,36 +1,50 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# EC2 Manager Frontend
+
+This is the frontend application for the EC2 Manager, built with [Next.js](https://nextjs.org).
 
 ## Getting Started
 
-First, run the development server:
+First, install the dependencies:
 
 ```bash
-npm run dev
+# Recommended
+bun install
 # or
-yarn dev
-# or
-pnpm dev
-# or
+npm install
+```
+
+Then, run the development server:
+
+```bash
 bun dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Development
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### API Mocking
 
-## Learn More
+You can enable or disable API mocking by editing the `.env.local` file:
 
-To learn more about Next.js, take a look at the following resources:
+```dotenv
+NEXT_PUBLIC_API_MOCKING=enabled # or disabled
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+When enabled, the application will use mock data instead of making actual API calls to AWS.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### Environment Variables
 
-## Deploy on Vercel
+Create a `.env.local` file in this directory for local development settings. See `.env.local.example` (if available) for required variables.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Building
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+To create a production build, run:
+
+```bash
+bun run build
+```
+
+## Deployment
+
+This application is designed to be deployed as a Docker container on AWS ECS. See the `Dockerfile` and the root `README.md` for more details.
