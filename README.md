@@ -11,29 +11,19 @@ ec2-manager/
 ├── doc/                   # ドキュメント
 ├── plan/                  # 開発計画文書
 ├── product/               # Next.js アプリケーションルート
-│   ├── .next/             # Next.js ビルド成果物
-│   ├── node_modules/      # npm パッケージ
 │   ├── public/            # 静的ファイル (画像など)
 │   ├── src/               # ソースコード
-│   │   ├── app/           # Next.js App Router
+│   │   ├── app/           # Next.js App Router (主要ディレクトリ/ファイル)
 │   │   │   ├── api/       # API Route Handlers (バックエンドロジック含む)
 │   │   │   ├── components/ # UI コンポーネント
-│   │   │   ├── lib/       # 共通ライブラリ、ヘルパー関数
-│   │   │   ├── globals.css # グローバル CSS
+│   │   │   ├── instances/ # EC2インスタンス詳細
 │   │   │   ├── layout.tsx # ルートレイアウト
-│   │   │   └── page.tsx   # トップページ
+│   │   │   ├── page.tsx   # トップページ（EC2インスタンス管理）
+│   │   │   └── providers.tsx # React Context Provider など
 │   │   └── mocks/         # MSW (APIモック) 関連
-│   ├── .env.local         # ローカル環境変数
-│   ├── .gitignore         # Git 無視ファイル設定
 │   ├── Dockerfile         # Docker イメージ定義
-│   ├── next-env.d.ts      # Next.js 型定義
 │   ├── next.config.ts     # Next.js 設定
-│   ├── package.json       # Node.js プロジェクト設定
-│   ├── bun.lockb          # Bun ロックファイル
-│   ├── postcss.config.mjs # PostCSS 設定
-│   ├── README.md          # アプリケーション README
-│   └── tsconfig.json      # TypeScript 設定
-├── .gitignore             # プロジェクトルート Git 無視設定
+│   └── README.md          # アプリケーション README
 └── README.md              # プロジェクトルート README
 ```
 
