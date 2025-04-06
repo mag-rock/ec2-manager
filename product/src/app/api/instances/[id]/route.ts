@@ -10,13 +10,16 @@ const ec2Client = new EC2Client({
 	region: process.env.AWS_REGION || 'ap-northeast-1',
 });
 
-export async function GET(request: NextRequest) {
+export async function GET(
+	request: NextRequest,
+	context: { params: Promise<{ id: string }> }
+) {
 	try {
-		const instanceId = request.nextUrl.searchParams.get('id');
+		const { id: instanceId } = await context.params;
 
 		if (!instanceId) {
 			return Response.json(
-				{ error: 'インスタンスIDが指定されていません' },
+				{ error: 'インスタンスIDが取得できませんでした' },
 				{ status: 400 }
 			);
 		}
